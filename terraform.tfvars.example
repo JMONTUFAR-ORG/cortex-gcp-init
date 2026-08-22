@@ -1,0 +1,21 @@
+# Copy this file to terraform.tfvars and fill in the values.
+# Do NOT commit terraform.tfvars with real values if the repository is public.
+
+organization_id = "123456789012"
+folder_id       = null # or "987654321098" to place the project inside a folder
+project_id      = "crtx-onboarding"
+project_name    = "Cortex Cloud Onboarding"
+billing_account = "012345-6789AB-CDEF01"
+region          = "us-central1"
+
+github_repository  = "my-github-org/cortex-gcp-onboarding"
+github_ref         = "refs/heads/main"
+service_account_id = "crtx-gcp-deployer"
+pool_id            = "github-pool"
+provider_id        = "github-provider"
+customer_ids       = ["C001ccccc", "C0122bbbbb"]
+
+project_labels = {
+  managed-by = "terraform"
+  purpose    = "org-baseline-automation"
+}
