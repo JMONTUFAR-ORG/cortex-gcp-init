@@ -64,6 +64,11 @@ terraform plan --var-file terraform.tfvars
 terraform apply --var-file terraform.tfvars
 ```
 
+> Notes
+>
+> * The project is created with `deletion_policy = "PREVENT"`. To destroy it you must first set the policy to `DELETE` and apply that change.
+> * Changes to the pool, the provider or IAM policies can take up to 5 minutes to propagate.
+
 If you need to re-read the output execute:
 ```bash
 terraform output
@@ -86,9 +91,3 @@ terraform output
 - `service_account_email` into the `onboarding_service_account_email` variable for the
   `googleworkspace` provider
 
-## Notes
-
-- The project is created with `deletion_policy = "PREVENT"`. To destroy it you
-  must first set the policy to `DELETE` and apply that change.
-- Changes to the pool, the provider or IAM policies can take up to 5 minutes to
-  propagate.
