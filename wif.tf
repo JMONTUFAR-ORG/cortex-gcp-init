@@ -7,6 +7,7 @@
 # Pool: logical container for external identities. One pool per external
 # environment is the recommended pattern (here, GitHub Actions).
 resource "google_iam_workload_identity_pool" "github" {
+  count                     = var.create_wif ? 1 : 0
   project                   = google_project.host.project_id
   workload_identity_pool_id = var.pool_id
   display_name              = "GitHub Actions"
@@ -18,6 +19,7 @@ resource "google_iam_workload_identity_pool" "github" {
 
 # OIDC provider: describes GitHub as the token issuer.
 resource "google_iam_workload_identity_pool_provider" "github" {
+  count                              = var.create_wif ? 1 : 0
   project                            = google_project.host.project_id
   workload_identity_pool_id          = google_iam_workload_identity_pool.github.workload_identity_pool_id
   workload_identity_pool_provider_id = var.provider_id
@@ -50,6 +52,7 @@ resource "google_iam_workload_identity_pool_provider" "github" {
 # repo may act as the service account. The branch restriction is already
 # enforced by the provider condition, so matching the repository is enough here.
 resource "google_service_account_iam_member" "wif_user" {
+  count              = var.create_wif ? 1 : 0
   service_account_id = google_service_account.tf_deployer.name
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github.name}/attribute.repository/${var.github_repository}"

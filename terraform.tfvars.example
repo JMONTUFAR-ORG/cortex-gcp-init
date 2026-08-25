@@ -13,7 +13,7 @@ github_ref         = "refs/heads/main"
 service_account_id = "crtx-gcp-deployer"
 pool_id            = "github-pool"
 provider_id        = "github-provider"
-customer_ids       = ["C001ccccc", "C0122bbbbb"]
+customer_ids       = ["C001ccccc", "C00v1avrt"]
 
 project_labels = {
   managed-by = "terraform"

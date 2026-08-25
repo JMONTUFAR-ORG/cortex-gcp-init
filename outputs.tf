@@ -18,7 +18,7 @@ output "workload_identity_provider" {
   description = "Value for workload_identity_provider in google-github-actions/auth@v3"
   # .name returns the full resource name:
   # projects/NUMBER/locations/global/workloadIdentityPools/POOL/providers/PROVIDER
-  value = google_iam_workload_identity_pool_provider.github.name
+  value = one(google_iam_workload_identity_pool_provider.github.*.name)
 }
 
 output "service_account_email" {

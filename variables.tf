@@ -3,6 +3,7 @@
 # Module inputs. All values are supplied through terraform.tfvars.
 # ---------------------------------------------------------------------------
 
+# Organization variables
 variable "organization_id" {
   description = "Numeric GCP organization ID (for example: 123456789012)."
   type        = string
@@ -62,6 +63,19 @@ variable "region" {
   default     = "us-central1"
 }
 
+variable "service_account_id" {
+  description = "ID of the service account Terraform will use from GitHub Actions."
+  type        = string
+  default     = "crtx-gcp-deployer"
+}
+
+# GitHub variables
+variable "create_wif" {
+  description = "Whether to create a Workload Identity Federation configuration"
+  type        = bool
+  default     = false
+}
+
 variable "github_repository" {
   description = "Authorized GitHub repository, in ORG/REPO format (for example: techworksgt/gcp-org-baseline)."
   type        = string
@@ -71,12 +85,6 @@ variable "github_ref" {
   description = "Branch allowed to impersonate the service account. Only this ref passes the attribute condition."
   type        = string
   default     = "refs/heads/main"
-}
-
-variable "service_account_id" {
-  description = "ID of the service account Terraform will use from GitHub Actions."
-  type        = string
-  default     = "tf-org-deployer"
 }
 
 variable "pool_id" {
@@ -91,12 +99,26 @@ variable "provider_id" {
   default     = "github-provider"
 }
 
-variable "customer_ids" {
-  description = "The Customer IDs to authorize Cortex and existing Workspaces"
-  type        = list(string)
-  sensitive   = true
+# Organization policy variables
+variable "update_org_policy" {
+  description = "Whether to update the organization policy of iam.allowedPolicyMemberDomains at the organization level"
+  type        = bool
+  default     = true
 }
 
+variable "customer_ids" {
+  description = <<-EOT
+    The Customer IDs to authorize Cortex and existing Workspaces
+    Must contain all the Customer IDs included in the iam.allowedPolicyMemberDomains
+    GCP Organization Policy (which should include the Customer ID of the Workspace)
+    plus the Customer ID of the Cortex Cloud Workspace (which is C00v1avrt)
+  EOT
+  type        = list(string)
+  sensitive   = true
+  default     = []
+}
+
+# State bucket variables
 variable "create_state_bucket" {
   description = "Create a GCS bucket for Terraform state storage"
   type        = bool

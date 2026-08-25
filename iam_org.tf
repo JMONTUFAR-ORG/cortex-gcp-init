@@ -51,6 +51,7 @@ resource "google_organization_iam_member" "tf_policy_editor" {
 
 # Organization policy to restrict allowed domains for IAM members
 resource "google_organization_policy" "domain_restriction" {
+  count      = var.update_org_policy ? 1 : 0
   org_id     = var.organization_id
   constraint = "constraints/iam.allowedPolicyMemberDomains"
 
