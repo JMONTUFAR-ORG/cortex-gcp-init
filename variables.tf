@@ -77,7 +77,7 @@ variable "create_wif" {
 }
 
 variable "github_repository" {
-  description = "Authorized GitHub repository, in ORG/REPO format (for example: techworksgt/gcp-org-baseline)."
+  description = "Authorized GitHub repository, in ORG/REPO format (for example: PaloAltoNetworks/gcp-org-baseline)."
   type        = string
 }
 

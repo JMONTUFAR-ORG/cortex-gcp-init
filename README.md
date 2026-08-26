@@ -34,6 +34,12 @@ authenticate without JSON keys:
 ### Environment
 The environment where this terraform is going to be deployed must contain a terraform version higher than **1.5.0**
 
+### GitHub Repository
+It is recommended that you have already the repository with the Terraform Code downloaded from Cortex Cloud 
+(excluding the tfvars file). If you are going to enable WIF, the repository name must match the variable 
+`github_repository`
+
+
 ## Process
 
 ### Setup the variables
@@ -41,7 +47,9 @@ Create a new variables file by executing the following command:
 ```bash
 cp terraform.tfvars.example terraform.tfvars
 ```
-And edit them according to you requirements. If the variable `update_org_policy` is set to `true` (which is the default value) then its required to do the following:
+And edit them according to you requirements. Since this is going to create a project, be sure that the `project_id` variable is unique
+
+If the variable `update_org_policy` is set to `true` (which is the default value) then its required to do the following:
 1. Inside GCP at the Org level, go to IAM & Admin > Organization Policies and search for the policy named 
   `iam.allowedPolicyMemberDomains`
 2. Take the list of Allowed values. This list should contain by default only the current Customer ID of the Workspace 
