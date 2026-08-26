@@ -21,7 +21,7 @@ resource "google_iam_workload_identity_pool" "github" {
 resource "google_iam_workload_identity_pool_provider" "github" {
   count                              = var.create_wif ? 1 : 0
   project                            = google_project.host.project_id
-  workload_identity_pool_id          = google_iam_workload_identity_pool[0].github.workload_identity_pool_id
+  workload_identity_pool_id          = one(google_iam_workload_identity_pool.github.*.workload_identity_pool_id)
   workload_identity_pool_provider_id = var.provider_id
   display_name                       = "GitHub OIDC"
 
@@ -55,5 +55,5 @@ resource "google_service_account_iam_member" "wif_user" {
   count              = var.create_wif ? 1 : 0
   service_account_id = google_service_account.tf_deployer.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool[0].github.name}/attribute.repository/${var.github_repository}"
+  member             = "principalSet://iam.googleapis.com/${one(google_iam_workload_identity_pool.github.*.name)}/attribute.repository/${var.github_repository}"
 }
