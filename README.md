@@ -76,6 +76,8 @@ terraform apply --var-file terraform.tfvars
 >
 > * The project is created with `deletion_policy = "PREVENT"`. To destroy it you must first set the policy to `DELETE` and apply that change.
 > * Changes to the pool, the provider or IAM policies can take up to 5 minutes to propagate.
+> * If you are going to create the state bucket, then the bucket is set to not be deleted, so it cannot be deleted with a terraform destroy.
+> * If you delete the WIF configuration after been created, it cannot be recreated after 30 days, since that's the time GCP takes to delete totally these integrations.
 
 If you need to re-read the output execute:
 ```bash
